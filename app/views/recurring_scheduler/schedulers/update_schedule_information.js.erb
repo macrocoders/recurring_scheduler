@@ -1,0 +1,7 @@
+$(".recurring-scheduler-description").
+  replaceWith("<%= j(render 'recurring_scheduler/schedulers/schedule_in_words', scheduler: @scheduler) %>");
+
+$(".recurring-scheduler-link-<%= @schedulable.id %>").
+  replaceWith("<%= j(render 'recurring_scheduler/schedulers/scheduler_link', scheduler: @scheduler, schedulable: @schedulable) %>");
+
+$('.rs_dialog_holder').remove();

@@ -1,0 +1,16 @@
+$('.rs_dialog_holder').remove();
+$('body').append("<%=
+  j(render 'recurring_scheduler/schedulers/form',
+            scheduler: @scheduler,
+            schedule: @schedule) %>");
+
+$('.rs_dialog_header').html("<h1>Edit scheduler</h1>");
+$('.rs_dialog_footer .controls').append("<%=
+  j(link_to 'Remove',
+            scheduler_path(@scheduler),
+            remote: true,
+            method: :delete,
+            class: 'rs_remove btn') %>");
+
+scheduler = new Scheduler();
+scheduler.initDialog();

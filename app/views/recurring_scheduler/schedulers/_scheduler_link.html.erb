@@ -1,0 +1,7 @@
+<div class="recurring-scheduler-link-<%= schedulable.id %>">
+  <% if scheduler %>
+    <%= link_to 'Edit Scheduler', recurring_scheduler.edit_scheduler_path(scheduler), remote: true %>
+  <% else %>
+    <%= link_to 'Add Scheduler', recurring_scheduler.new_scheduler_path("#{schedulable.class.to_s.parameterize}_id" => schedulable.id), remote: true %>
+  <% end %>
+</div>

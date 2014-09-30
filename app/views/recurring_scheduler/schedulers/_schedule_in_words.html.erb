@@ -1,0 +1,7 @@
+<div class="recurring-scheduler-description">
+  <% if scheduler %>
+    <p><%= schedule_in_words(scheduler.schedule) %></p>
+  <% else %>
+    <p>No schedule for this entity yet</p>
+  <% end %>
+</div>

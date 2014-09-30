@@ -1,0 +1,11 @@
+$('.rs_dialog_holder').remove();
+$('body').append("<%=
+  j(render 'recurring_scheduler/schedulers/form',
+            scheduler: @scheduler,
+            schedulable: @schedulable,
+            schedule: @schedule) %>");
+
+$('.rs_dialog_header').html("<h1>New scheduler</h1>");
+
+scheduler = new Scheduler();
+scheduler.initDialog();

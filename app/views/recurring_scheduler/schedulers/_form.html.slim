@@ -1,0 +1,82 @@
+.rs_dialog_holder
+  .rs_dialog
+    .rs_dialog_header
+    .rs_dialog_content
+      .starts-on.rs_dialog_item
+        label Starts on
+        = text_field_tag 'start-date', schedule.start_time.strftime('%m/%d/%Y')
+        '&nbsp;at&nbsp;
+        .input-append.rs_start_time
+          = text_field_tag 'start-time', schedule.start_time.strftime('%I:%M')
+          = content_tag :button, 'am', id: 'rs_am', class: "btn #{'btn-primary' if schedule.start_time.strftime('%P') == 'am'}"
+          = content_tag :button, 'pm', id: 'rs_pm', class: "btn #{'btn-primary' if schedule.start_time.strftime('%P') == 'pm'}"
+        = hidden_field_tag 'time-zone', schedule.start_time.strftime('%z')
+
+      .rs-repeats.rs_dialog_item
+        = label_tag 'rs_frequency', 'Repeats'
+        .btn-group.rs_frequency
+          button#rs_repeats_never.btn Never
+          button#rs_repeats_daily.btn Daily
+          button#rs_repeats_weekly.btn Weekly
+          button#rs_repeats_monthly.btn Monthly
+          button#rs_repeats_yearly.btn Yearly
+
+      .daily_options.freq_option_section.rs_dialog_item
+        label Every
+        = text_field_tag 'rs_daily_interval', '1', class: 'rs_daily_interval rs_interval', size: '2'
+        '&nbsp;day(s)
+
+      .weekly_options.freq_option_section.rs_dialog_item
+        label Every
+        = text_field_tag 'rs_weekly_interval', '1', class: 'rs_weekly_interval rs_interval', size: '2'
+        '&nbsp;week(s) on
+        .day_holder.btn-group
+          - (0..6).each do |day|
+            - day_of_week = day % 7
+            = link_to ["S", "M", "T", "W", "T", "F", "S"][day_of_week], '#', data: { value: "#{day_of_week}" }, class: 'btn'
+        span style='clear:both; visibility:hidden; height:1px;'
+          | .
+
+      .monthly_options.freq_option_section.rs_dialog_item
+        label Every
+        = text_field_tag 'rs_monthly_interval', '1', class: 'rs_monthly_interval rs_interval', size: '2'
+        '&nbsp;month(s)
+        .monthly_rule_type
+          label Set day of
+          .btn-group
+            button#rs_monthly_rule_type_day.btn Month
+            button#rs_monthly_rule_type_week.btn Week
+        p.rs_calendar_day
+        p.rs_calendar_week
+
+      .yearly_options.freq_option_section.rs_dialog_item
+        label Every
+        = text_field_tag 'rs_yearly_interval', '1', class: 'rs_yearly_interval rs_interval', size: '2'
+        '&nbsp;year(s)
+
+      .rs_ends_block.rs_dialog_item
+        .rs_ends_options
+          label Ends
+          .btn-group.rs_ends
+            button#rs_ends_never.btn Never
+            button#rs_ends_after.btn After some occurences
+            button#rs_ends_date.btn On date
+        .rs_ends_after
+          label After
+          = text_field_tag 'rs_ends_after_interval', '1', class: 'rs_ends_after_interval rs_interval', size: '2'
+          '&nbsp;occurrence(s)
+        .rs_ends_date
+          label End date
+          = text_field_tag 'rs_end_date'
+
+    .rs_dialog_footer
+      .rs_summary
+        p
+      = form_for scheduler, html: { id: 'scheduler-form' }, remote: true do |f|
+        .hidden-fields
+          = f.hidden_field :schedule, value: schedule.to_json
+          - if defined?(schedulable)
+            = hidden_field_tag "#{schedulable.class.to_s.parameterize}_id", schedulable.id
+        .controls
+          = f.submit nil, class: 'rs_save btn'
+          = f.submit 'Cancel', class: 'rs_cancel btn', type: :button

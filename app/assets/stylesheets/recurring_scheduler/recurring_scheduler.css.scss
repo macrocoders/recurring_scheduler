@@ -1,0 +1,334 @@
+@import "recurring_scheduler_utilities.scss";
+
+/* -------- resets ---------------*/
+
+.rs_dialog_holder { font-size:14px; color:black;
+  a {color:black;}
+}
+
+/*------- defaults ------------ */
+.rs_dialog_holder { font-family:helvetica, arial, 'san-serif'; color:#222; font-size:12px;}
+
+/*------- specifics ------------ */
+
+select {
+  option.bold {font-weight:bold; color:red;}
+}
+
+.rs_dialog_holder {
+  position:fixed;
+  left:0px;
+  right:0px;
+  top:0px;
+  bottom:0px;
+  padding-left: 50%;
+  background-color:rgba(0,0,0,0.4);
+  z-index:101;
+  .rs_dialog {
+    background-color:#f6f6f6;
+    border:1px solid #acacac;
+    @include shadows(1px, 3px, 8px, rgba(0,0,0,0.25));
+    @include rounded_corners(7px);
+    display:inline-block;
+    min-width:200px;
+    width: 510px;
+    margin-left:-250px;
+    overflow:hidden;
+    position:relative;
+    .rs_dialog_content { padding:10px;
+      h1 { font-size:16px; padding:0px; margin:0 0 10px 0;
+        a {float:right; display:inline-block; height:16px; width:16px; background-image:url(""); background-position:center; background-repeat:no-repeat;}
+      }
+
+      p { padding:5px 0; margin:0;
+        label {margin-right:10px;}
+      }
+
+      .rs_ends_options, .rs_ends_after, .rs_ends_date { display:none }
+
+      .freq_option_section { display:none;
+        label { font-weight: bold; }
+        .rs_interval {width:30px; text-align:center;}
+
+        .day_holder {
+          a {
+            &:hover, &.selected {
+              background-color: #42a6d0;
+              color: #fff;
+            }
+          }
+        }
+
+        .rs_calendar_day, .rs_calendar_week {
+          width: 270px;
+          a {
+            display:inline-block;
+            text-align:center;
+            width:36px;
+            height: 36px;
+            font-size: 14px;
+            line-height: 36px;
+            border-radius: 18px;
+            cursor: pointer;
+            @include animated(all, 0.1s, ease);
+            &:hover, &.selected {
+              background-color: #42a6d0;
+              color: #fff;
+            }
+          }
+          a.end_of_month {
+            float: right;
+            width: 80px;
+            border-radius: 4px;
+            height: 30px;
+            line-height: 30px;
+            margin-right: 28px;
+          }
+        }
+        .rs_calendar_week {
+          width: 290px;
+          span {
+            display: inline-block;
+            width: 35px;
+          }
+        }
+
+        .monthly_rule_type {
+          span {
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+
+    &.animated {
+      .controls {position:absolute; bottom:10px; left:10px;}
+      .rs_summary, .freq_option_section {display:none;}
+    }
+
+  }
+}
+
+/* new */
+.rs_dialog_holder {
+  form {
+    margin: 0;
+  }
+  .rs_dialog {
+    background-color: #ffffff !important;
+    border: 0 !important;
+    .rs_dialog_header {
+      text-align: center;
+      h1 {
+        font-family: PT Sans Narrow, sans;
+        font-size: 28px;
+        font-weight: bold;
+      }
+    }
+    .rs_dialog_content {
+      padding: 0 30px !important;
+      color: #b8b8b8;
+      font-size: 14px;
+      label {
+        width: 105px;
+        display: inline-block;
+        font-weight: normal !important;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      input[type="text"] {
+        display: inline-block;
+        height: 30px;
+        margin-bottom: 0;
+        padding: 0 18px 0 10px;
+        font-size: 16px;
+        border: 1px solid #e5e5e5;
+        border-top: 1px solid #c3c3c3;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      .input-append {
+        margin-bottom: 0;
+        .btn {
+          margin: 0;
+        }
+        input {
+          &+.btn {
+            border-radius: 4px 0 0 4px;
+          }
+        }
+      }
+    }
+  }
+  .btn {
+    height: 30px;
+    border: 1px solid #c6e4f1;
+    background: #ffffff;
+    color: #42a6d0;
+    padding: 0 10px;
+    text-shadow: none;
+    font-size: 16px;
+    &:hover {
+      background: #42a6d0;
+      color: #ffffff;
+      border-color: #42a6d0;
+    }
+  }
+  .btn-primary {
+    border: 1px solid #42a6d0;
+    background: #42a6d0;
+    color: #ffffff;
+  }
+  .rs_dialog_item {
+    margin-bottom: 30px;
+  }
+  .rs-repeats {
+    select {
+    }
+  }
+  .set_day_cal_wrap {
+    display: inline-block;
+  }
+  .monthly_rule_type {
+    margin-top: 25px;
+    input[type="radio"] {
+      //display: none;
+    }
+  }
+  .rs_calendar_day, .rs_calendar_week {
+    margin-top: 30px !important;
+    margin-left: 105px !important;
+  }
+  .day_holder {
+    margin-top: 25px !important;
+    display: block;
+    margin-left: 105px;
+  }
+  .ends_date {
+    margin-top: 30px;
+  }
+  .ends_options {
+    margin-bottom: 40px;
+  }
+  .btn-group {
+    .btn {
+      margin: 0;
+      border-left-width: 0;
+      border-radius: 0;
+      &:first-child {
+        border-left-width: 1px;
+        border-radius: 4px 0 0 4px;
+      }
+      &:last-child {
+        border-radius: 0 4px 4px 0;
+      }
+    }
+  }
+  a.btn {
+    line-height: 30px;
+  }
+  .notifications_checkboxes {
+    display: inline-block;
+    font-size: 16px;
+    color: #000000;
+    span {
+      width: 18px;
+      height: 19px;
+      display: inline-block;
+      margin-right: 10px;
+      background-position: left bottom;
+      background-repeat: no-repeat;
+      background-image: image-url("checkbox-un.png");
+    }
+    ins {
+      text-decoration: none;
+    }
+    input {
+      width: 1px;
+      height: 1px;
+      visibility: hidden;
+      margin: -1px 0 0 -1px;
+      &:checked {
+        &+label {
+          span {
+            background-image: image-url("checkbox.png");
+          }
+        }
+      }
+    }
+  }
+  .notifications_options {
+    label {
+      vertical-align: top;
+    }
+  }
+  .rs_dialog_footer {
+    background: #ecf6fa;
+    padding: 15px 30px 15px 135px;
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .rs_save {
+      background: #fbe265;
+      border: 0;
+      border-radius: 4px;
+      color: #000000;
+      &:hover {
+        background: darken(#fbe265, 10%);
+      }
+    }
+    .rs_cancel {
+      background: transparent;
+      border: 0;
+      border-radius: 4px;
+      color: #42a6d0;
+      &:hover {
+        background: #42a6d0;
+        color: #ffffff;
+      }
+    }
+    .rs_remove {
+      background: transparent;
+      border: 0;
+      border-radius: 4px;
+      color: #c1272d;
+      float: right;
+      &:hover {
+        background: #c1272d;
+        color: #ffffff;
+      }
+    }
+  }
+  .rs_ends_options {
+    margin-bottom: 30px;
+  }
+}
+
+#start-date, #end-date, #rs_end_date {
+  width: 110px;
+}
+#start-time {
+  width: 90px;
+  margin-right: 10px;
+}
+#every-month {
+  width: 45px;
+}
+#rs_daily_interval, #rs_weekly_interval, #rs_monthly_interval, #rs_yearly_interval,
+#rs_ends_after_interval {
+  width: 50px;
+}
+
+
+// Scheduling Active Admin styles
+
+.active_admin {
+
+  .rs_dialog {
+    margin-top: 0;
+  }
+}
