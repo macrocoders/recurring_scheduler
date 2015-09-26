@@ -1,4 +1,5 @@
-require 'recurring_scheduler/engine'
+require "recurring_scheduler/engine"
+require "ice_cube"
 
 module RecurringScheduler
   class << self
