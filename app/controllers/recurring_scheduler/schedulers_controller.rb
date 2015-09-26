@@ -1,5 +1,5 @@
 module RecurringScheduler
-  class SchedulersController < BaseController
+  class SchedulersController < ApplicationController
     include RecurringSchedulerHelper
 
     def new
