@@ -2,7 +2,7 @@ module RecurringScheduler
   class Scheduler < ActiveRecord::Base
     self.table_name = 'recurring_schedulers'
 
-    # before_destroy :destroy_delayed_jobs
+    after_save :schedule_action
 
     belongs_to :schedulable, polymorphic: true
 
@@ -13,9 +13,9 @@ module RecurringScheduler
     end
 
     def schedule_action
-      if next_occurrence
-        delay(run_at: next_occurrence, scheduler_id: id).process_schedule
-      end
+      next_occurrence = schedule.next_occurrence
+
+      ProcessScheduleJob.set(wait_until: next_occurrence).perform_later(self) if next_occurrence
     end
 
     def process_action
@@ -39,10 +39,6 @@ module RecurringScheduler
 
     def action
       schedulable.class.recurring_action
-    end
-
-    def destroy_delayed_jobs
-      Delayed::Job.where(scheduler_id: id).destroy_all
     end
   end
 end
